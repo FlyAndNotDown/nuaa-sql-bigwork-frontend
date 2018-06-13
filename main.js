@@ -3,6 +3,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
+// 数据库连接信息
+let databaseConnection = {
+    host: '127.0.0.1',
+    port: '3306',
+    user: 'kindem',
+    password: '123456',
+    database: 'student_info_manager',
+    connectTimeout: 1000
+};
+
 // 全局异常处理
 process.on('uncaughtException', (err) => {
     console.log(err);

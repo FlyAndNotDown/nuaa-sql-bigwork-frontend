@@ -9,7 +9,11 @@ export class CenterLayout extends React.Component {
                 this.props.className ?
                     this.props.className : null
             }>
-                <Row className={'width-100 margin-auto-auto'}>
+                <Row className={
+                    this.props.rowClassName ?
+                        'width-100 margin-auto-auto ' + this.props.rowClassName:
+                        'width-100 margin-auto-auto'
+                }>
                     <Col span={this.props.span} offset={
                         this.props.span % 2 === 0 ?
                             (24 - this.props.span ) / 2 :

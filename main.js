@@ -25,6 +25,27 @@ let window;
 let server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
+server.post('/request/student/getAll', (req, res) => {
+    let connection = mysql.createConnection(databaseConnection);
+    connection.query('select * from student', (err, r) => {
+        if (err) {
+            connection.end();
+            return res.json({
+                success: false
+            });
+        }
+        console.log(r);
+        let result = [];
+        r.map((item) => {
+
+        });
+        connection.end();
+        return res.json({
+            success: true,
+            result: result
+        });
+    });
+});
 
 // 创建浏览器窗口函数
 let createWindow = () => {

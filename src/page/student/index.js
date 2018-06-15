@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Row, Col, Breadcrumb, Modal, message } from 'antd';
+import { Table, Button, Row, Col, Breadcrumb, Modal, message, Form, Input, Popconfirm } from 'antd';
 import { FixedLayout } from "../../component/layout/fixed-layout";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -14,7 +14,11 @@ export class StudentIndexPage extends React.Component {
             // 被选中的行
             selectedKeys: [],
             // 是否加载完毕
-            loadDown: false
+            loadDown: false,
+
+            // Modal
+            addModalShow: false,
+            modifyModalShow: false
         };
 
         // 列信息
@@ -59,27 +63,25 @@ export class StudentIndexPage extends React.Component {
 
     refresh() {
         this.setState({
-            data: [{
-                key: 1,
-                id: 1,
-                number: '161520311',
-                name: '黄文麒',
-                college: '计算机科学与技术学院',
-                major: '信息安全',
-                sex: '男',
-                grade: '大三',
-                gpa: '3.0',
-                phone: '15651603126'
-            }],
+            data: [],
             selectedKeys: [],
-            loadDown: true
+            loadDown: false
         });
 
-        // TODO 发送请求获取数据，当获取数据完毕设置loadDown为true
         axios
             .post('/request/student/getAll')
             .then((res) => {
-
+                if (res.data.success) {
+                    this.setState({
+                        data: res.data.result,
+                        loadDown: true
+                    });
+                } else {
+                    message.error('数据加载失败，请检查网络连接!');
+                    this.setState({
+                        loadDown: true
+                    });
+                }
             });
     }
 
@@ -100,16 +102,38 @@ export class StudentIndexPage extends React.Component {
                         {this.state.loadDown ?
                             (<div>
                                 <Button.Group>
-                                    <Button type={'primary'}>新增</Button>
+                                    <Button type={'primary'}
+                                            onClick={() => {
+                                                this.setState({
+                                                    addModalShow: true
+                                                });
+                                            }}>新增</Button>
                                     <Button type={'danger'}
-                                            disabled={this.state.selectedKeys.length <= 0}>
+                                            disabled={this.state.selectedKeys.length <= 0}
+                                            onClick={() => {
+                                                this.setState({
+                                                    modifyModalShow: true
+                                                });
+                                            }}>
                                         修改选中
                                     </Button>
-                                    <Button type={'danger'}
-                                            disabled={this.state.selectedKeys.length <= 0}>
-                                        删除选中
-                                    </Button>
-                                    <Button>刷新</Button>
+                                    <Popconfirm title={'确定删除?'}
+                                                okText={'确定'}
+                                                cancelText={'点错了'}
+                                                onConfirm={() => {
+                                                    // TODO
+                                                }}
+                                                onCancel={() => {
+                                                    // TODO
+                                                }}>
+                                        <Button type={'danger'}
+                                                disabled={this.state.selectedKeys.length <= 0}>
+                                            删除选中
+                                        </Button>
+                                    </Popconfirm>
+                                    <Button onClick={() => {
+                                        this.refresh();
+                                    }}>刷新</Button>
                                 </Button.Group>
                                 <Table className={'margin-top-10px'}
                                        columns={this.cols}
@@ -128,6 +152,78 @@ export class StudentIndexPage extends React.Component {
                         }
                     </Col>
                 </Row>
+
+                <Modal visible={this.state.addModalShow}
+                       onCancel={() => {
+                           this.setState({
+                               addModalShow: false
+                           });
+                       }}
+                       title={'新增学籍'}
+                       okText={'提交'}
+                       cancelText={'取消'}>
+                    <Form layout={'inline'}>
+                        <Form.Item label={'学号'}>
+                            <Input placeholder={'学号'}/>
+                        </Form.Item>
+                        <Form.Item label={'姓名'}>
+                            <Input placeholder={'姓名'}/>
+                        </Form.Item>
+                        <Form.Item label={'学院'}>
+                            <Input placeholder={'学院'}/>
+                        </Form.Item>
+                        <Form.Item label={'专业'}>
+                            <Input placeholder={'专业'}/>
+                        </Form.Item>
+                        <Form.Item label={'性别'}>
+                            <Input placeholder={'性别'}/>
+                        </Form.Item>
+                        <Form.Item label={'年级'}>
+                            <Input placeholder={'年级'}/>
+                        </Form.Item>
+                        <Form.Item label={'绩点'}>
+                            <Input placeholder={'绩点'}/>
+                        </Form.Item>
+                        <Form.Item label={'手机'}>
+                            <Input placeholder={'手机'}/>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+                <Modal visible={this.state.modifyModalShow}
+                       onCancel={() => {
+                           this.setState({
+                               modifyModalShow: false
+                           });
+                       }} title={'批量修改'}
+                       okText={'提交'}
+                       cancelText={'取消'}>
+                    <Form layout={'inline'}>
+                        <Form.Item label={'学号'}>
+                            <Input placeholder={'学号'}/>
+                        </Form.Item>
+                        <Form.Item label={'姓名'}>
+                            <Input placeholder={'姓名'}/>
+                        </Form.Item>
+                        <Form.Item label={'学院'}>
+                            <Input placeholder={'学院'}/>
+                        </Form.Item>
+                        <Form.Item label={'专业'}>
+                            <Input placeholder={'专业'}/>
+                        </Form.Item>
+                        <Form.Item label={'性别'}>
+                            <Input placeholder={'性别'}/>
+                        </Form.Item>
+                        <Form.Item label={'年级'}>
+                            <Input placeholder={'年级'}/>
+                        </Form.Item>
+                        <Form.Item label={'绩点'}>
+                            <Input placeholder={'绩点'}/>
+                        </Form.Item>
+                        <Form.Item label={'手机'}>
+                            <Input placeholder={'手机'}/>
+                        </Form.Item>
+                    </Form>
+                </Modal>
             </FixedLayout>
         );
     }

@@ -34,10 +34,20 @@ server.post('/request/student/getAll', (req, res) => {
                 success: false
             });
         }
-        console.log(r);
         let result = [];
         r.map((item) => {
-
+            result.push({
+                key: item.id,
+                id: item.id,
+                number: item.number,
+                name: item.name,
+                college: item.college,
+                major: item.major,
+                sex: item.sex,
+                grade: item.grade,
+                gpa: item.gpa,
+                phone: item.phone
+            });
         });
         connection.end();
         return res.json({
@@ -45,6 +55,15 @@ server.post('/request/student/getAll', (req, res) => {
             result: result
         });
     });
+});
+server.post('/request/student/delete', (req, res) => {
+    // TODO
+});
+server.post('/request/student/add', (req, res) => {
+    // TODO
+});
+server.post('/request/student/modify', (req, res) => {
+    // TODO
 });
 
 // 创建浏览器窗口函数

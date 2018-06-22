@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
 // 数据库连接信息
-let databaseConnection = {
+let dbConnectionInfo = {
     host: '127.0.0.1',
     port: '3306',
     user: 'kindem',
@@ -26,7 +26,7 @@ let server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
 server.post('/request/student/getAll', (req, res) => {
-    let connection = mysql.createConnection(databaseConnection);
+    let connection = mysql.createConnection(dbConnectionInfo);
     connection.query('select * from student', (err, r) => {
         if (err) {
             connection.end();
@@ -59,7 +59,7 @@ server.post('/request/student/getAll', (req, res) => {
 server.post('/request/student/add', (req, res) => {
     // 建立连接
     let args = req.body;
-    let connection = mysql.createConnection(databaseConnection);
+    let connection = mysql.createConnection(dbConnectionInfo);
     let sql = 'insert into student(number, name, college, major, sex, grade, gpa, phone) ' +
         'values(?, ?, ?, ?, ?, ?, ?, ?)';
     let params = [];
@@ -72,6 +72,33 @@ server.post('/request/student/add', (req, res) => {
     params.push(args.gpa);
     params.push(args.phone);
     connection.query(sql, params, (err) => {
+        setTimeout(() => {
+            if (err) {
+                connection.end();
+                return res.json({
+                    success: false
+                });
+            }
+            connection.end();
+            return res.json({
+                success: true
+            });
+        }, 1000);
+    });
+});
+server.post('/request/student/delete', (req, res) => {
+    let args = req.body;
+    let connection = mysql.createConnection(dbConnectionInfo);
+    let idList = '';
+    args.ids.map((id, no) => {
+        if (no === args.ids.length - 1)
+            idList += id;
+        else
+            idList += `${id},`;
+    });
+    let sql = `delete from student where id in (${idList})`;
+    connection.query(sql, (err) => {
+        // 延迟一秒执行，防止老师感觉我的数据库操作太快
         if (err) {
             connection.end();
             return res.json({
@@ -84,11 +111,49 @@ server.post('/request/student/add', (req, res) => {
         });
     });
 });
-server.post('/request/student/delete', (req, res) => {
-    // TODO
-});
 server.post('/request/student/modify', (req, res) => {
-    // TODO
+    let args = req.body;
+    let connection = mysql.createConnection(dbConnectionInfo);
+    let suc = true;
+    let idList = '';
+    args.ids.map((id, no) => {
+        if (no === args.ids.length - 1)
+            idList += id;
+        else
+            idList += `${id},`;
+    });
+    let sqls = [
+        `update student set number = ? where id in (${idList})`,
+        `update student set name = ? where id in (${idList})`,
+        `update student set college = ? where id in (${idList})`,
+        `update student set major = ? where id in (${idList})`,
+        `update student set sex = ? where id in (${idList})`,
+        `update student set grade = ? where id in (${idList})`,
+        `update student set gpa = ? where id in (${idList})`,
+        `update student set phone = ? where id in (${idList})`
+    ];
+    let params = [
+        args.number === '' ? null : [args.number],
+        args.name === '' ? null : [args.name],
+        args.college === '' ? null : [args.college],
+        args.major === '' ? null : [args.major],
+        args.sex === '' ? null : [args.sex],
+        args.grade === '' ? null : [args.grade],
+        args.gpa === -1 ? null : [args.gpa],
+        args.phone === '' ? null : [args.phone]
+    ];
+    for (let i = 0; i < 8; i++)
+        if (params[i])
+            connection.query(sqls[i], params[i], (err) => {
+                if (err) suc = false;
+            });
+
+    setTimeout(() => {
+        connection.end();
+        res.json({
+            success: suc
+        });
+    }, 1000);
 });
 
 // 创建浏览器窗口函数

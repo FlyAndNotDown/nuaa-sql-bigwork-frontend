@@ -29,7 +29,7 @@ export class StudentIndexPage extends React.Component {
             addModalGrade: '',
             addModalGpa: '',
             addModalPhone: '',
-            
+
             // modify Modal中的数据
             modifyModalNumber: '',
             modifyModalName: '',
@@ -120,7 +120,7 @@ export class StudentIndexPage extends React.Component {
                     <Col>
                         <Breadcrumb className={'font-size-20px'}>
                             <Breadcrumb.Item><Link to={'/'}>首页</Link></Breadcrumb.Item>
-                            <Breadcrumb.Item><Link to={'/'}>学籍管理</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><a>学籍管理</a></Breadcrumb.Item>
                         </Breadcrumb>
                         <h1 className={'font-size-35px'}>学籍详情</h1>
                         {this.state.loadDown ?
@@ -145,10 +145,18 @@ export class StudentIndexPage extends React.Component {
                                                 okText={'确定'}
                                                 cancelText={'点错了'}
                                                 onConfirm={() => {
-                                                    // TODO
-                                                }}
-                                                onCancel={() => {
-                                                    // TODO
+                                                    axios
+                                                        .post('/request/student/delete', {
+                                                            ids: this.state.selectedKeys
+                                                        })
+                                                        .then((res) => {
+                                                            if (res.data.success) {
+                                                                message.success('删除成功!');
+                                                                this.refresh();
+                                                            } else {
+                                                                message.error('删除失败');
+                                                            }
+                                                        });
                                                 }}>
                                         <Button type={'danger'}
                                                 disabled={this.state.selectedKeys.length <= 0}>
@@ -310,32 +318,115 @@ export class StudentIndexPage extends React.Component {
                        cancelText={'取消'}
                        confirmLoading={this.state.modifyModalDealing}
                        onOk={() => {
-                           // TODO
+                           this.setState({
+                               modifyModalDealing: true
+                           });
+                           axios
+                               .post('/request/student/modify', {
+                                   ids: this.state.selectedKeys,
+                                   number: this.state.modifyModalNumber,
+                                   name: this.state.modifyModalName,
+                                   college: this.state.modifyModalCollege,
+                                   major: this.state.modifyModalMajor,
+                                   sex: this.state.modifyModalSex,
+                                   grade: this.state.modifyModalGrade,
+                                   gpa: this.state.modifyModalGpa === '' ?
+                                       -1 : this.state.modifyModalGpa,
+                                   phone: this.state.modifyModalPhone
+                               })
+                               .then((res) => {
+                                   if (res.data.success) {
+                                       message.success('修改成功!');
+                                       this.refresh();
+                                   } else {
+                                       message.error('修改失败!');
+                                   }
+                                   this.setState({
+                                       modifyModalDealing: false,
+                                       modifyModalShow: false,
+                                       modifyModalNumber: '',
+                                       modifyModalName: '',
+                                       modifyModalCollege: '',
+                                       modifyModalMajor: '',
+                                       modifyModalSex: '',
+                                       modifyModalGrade: '',
+                                       modifyModalGpa: '',
+                                       modifyModalPhone: ''
+                                   });
+                               });
                        }}>
                     <Form layout={'inline'}>
                         <Form.Item label={'学号'}>
-                            <Input placeholder={'学号'}/>
+                            <Input placeholder={'学号'}
+                                   value={this.state.modifyModalNumber}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalNumber: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'姓名'}>
-                            <Input placeholder={'姓名'}/>
+                            <Input placeholder={'姓名'}
+                                   value={this.state.modifyModalName}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalName: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'学院'}>
-                            <Input placeholder={'学院'}/>
+                            <Input placeholder={'学院'}
+                                   value={this.state.modifyModalCollege}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalCollege: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'专业'}>
-                            <Input placeholder={'专业'}/>
+                            <Input placeholder={'专业'}
+                                   value={this.state.modifyModalMajor}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalMajor: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'性别'}>
-                            <Input placeholder={'性别'}/>
+                            <Input placeholder={'性别'}
+                                   value={this.state.modifyModalSex}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalSex: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'年级'}>
-                            <Input placeholder={'年级'}/>
+                            <Input placeholder={'年级'}
+                                   value={this.state.modifyModalGrade}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalGrade: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'绩点'}>
-                            <Input placeholder={'绩点'}/>
+                            <Input placeholder={'绩点'}
+                                   value={this.state.modifyModalGpa}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalGpa: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'手机'}>
-                            <Input placeholder={'手机'}/>
+                            <Input placeholder={'手机'}
+                                   value={this.state.modifyModalPhone}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           modifyModalPhone: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                     </Form>
                 </Modal>

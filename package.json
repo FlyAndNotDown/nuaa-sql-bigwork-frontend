@@ -33,5 +33,5 @@
   "main": "main.js",
   "homepage": ".",
   "DEV": false,
-  "proxy": "http://127.0.0.1:45000/"
+  "proxy": "http://127.0.0.1:45000/ "
 }

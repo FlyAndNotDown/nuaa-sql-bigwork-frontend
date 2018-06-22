@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Button, Select } from 'antd';
+import { Form, Button, Select, Avatar } from 'antd';
 import { CenterLayout } from "../component/layout/center-layout";
 import request from 'axios';
+import avatarImg from '../img/avatar.jpg';
 
 export class IndexPage extends React.Component {
     constructor(props) {
@@ -39,6 +40,12 @@ export class IndexPage extends React.Component {
                         }}>进入系统</Button>
                     </Form.Item>
                 </Form>
+                <div className={'affixBottom padding-left padding-left-40px'}>
+                    <Avatar src={avatarImg}/>
+                    <span className={'color-grey text-size-20px padding-left-10px'}>
+                        Powered By John Kindem
+                    </span>
+                </div>
             </CenterLayout>
         );
     }

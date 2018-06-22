@@ -56,10 +56,35 @@ server.post('/request/student/getAll', (req, res) => {
         });
     });
 });
-server.post('/request/student/delete', (req, res) => {
-    // TODO
-});
 server.post('/request/student/add', (req, res) => {
+    // 建立连接
+    let args = req.body;
+    let connection = mysql.createConnection(databaseConnection);
+    let sql = 'insert into student(number, name, college, major, sex, grade, gpa, phone) ' +
+        'values(?, ?, ?, ?, ?, ?, ?, ?)';
+    let params = [];
+    params.push(args.number);
+    params.push(args.name);
+    params.push(args.college);
+    params.push(args.major);
+    params.push(args.sex);
+    params.push(args.grade);
+    params.push(args.gpa);
+    params.push(args.phone);
+    connection.query(sql, params, (err) => {
+        if (err) {
+            connection.end();
+            return res.json({
+                success: false
+            });
+        }
+        connection.end();
+        return res.json({
+            success: true
+        });
+    });
+});
+server.post('/request/student/delete', (req, res) => {
     // TODO
 });
 server.post('/request/student/modify', (req, res) => {

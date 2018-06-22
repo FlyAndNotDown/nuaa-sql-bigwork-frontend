@@ -16,9 +16,33 @@ export class StudentIndexPage extends React.Component {
             // 是否加载完毕
             loadDown: false,
 
-            // Modal
+            // Modal显示情况
             addModalShow: false,
-            modifyModalShow: false
+            modifyModalShow: false,
+
+            // add Modal 中的数据
+            addModalNumber: '',
+            addModalName: '',
+            addModalCollege: '',
+            addModalMajor: '',
+            addModalSex: '',
+            addModalGrade: '',
+            addModalGpa: '',
+            addModalPhone: '',
+            
+            // modify Modal中的数据
+            modifyModalNumber: '',
+            modifyModalName: '',
+            modifyModalCollege: '',
+            modifyModalMajor: '',
+            modifyModalSex: '',
+            modifyModalGrade: '',
+            modifyModalGpa: '',
+            modifyModalPhone: '',
+
+            // Modal 处理中
+            addModalDealing: false,
+            modifyModalDealing: false
         };
 
         // 列信息
@@ -161,31 +185,118 @@ export class StudentIndexPage extends React.Component {
                        }}
                        title={'新增学籍'}
                        okText={'提交'}
-                       cancelText={'取消'}>
+                       cancelText={'取消'}
+                       onOk={() => {
+                            this.setState({
+                                addModalDealing: true
+                            });
+                            // 发送数据到后台
+                            axios
+                                .post('request/student/add', {
+                                    number: this.state.addModalNumber,
+                                    name: this.state.addModalName,
+                                    college: this.state.addModalCollege,
+                                    major: this.state.addModalMajor,
+                                    sex: this.state.addModalSex,
+                                    grade: this.state.addModalGrade,
+                                    gpa: parseFloat(this.state.addModalGpa),
+                                    phone: this.state.addModalPhone
+                                })
+                                .then((res) => {
+                                    if (res.data.success) {
+                                        message.success('添加成功!');
+                                        this.refresh();
+                                    } else {
+                                        message.error('添加失败!');
+                                    }
+                                    this.setState({
+                                        addModalShow: false,
+                                        addModalDealing: false,
+                                        addModalNumber: '',
+                                        addModalName: '',
+                                        addModalCollege: '',
+                                        addModalMajor: '',
+                                        addModalSex: '',
+                                        addModalGrade: '',
+                                        addModalGpa: '',
+                                        addModalPhone: ''
+                                    });
+                                });
+                        }}
+                       confirmLoading={this.state.addModalDealing}>
                     <Form layout={'inline'}>
                         <Form.Item label={'学号'}>
-                            <Input placeholder={'学号'}/>
+                            <Input placeholder={'学号'}
+                                   value={this.state.addModalNumber}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalNumber: e.target.value
+                                       });
+                                       console.log(JSON.stringify(this.state));
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'姓名'}>
-                            <Input placeholder={'姓名'}/>
+                            <Input placeholder={'姓名'}
+                                   value={this.state.addModalName}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalName: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'学院'}>
-                            <Input placeholder={'学院'}/>
+                            <Input placeholder={'学院'}
+                                   value={this.state.addModalCollege}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalCollege: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'专业'}>
-                            <Input placeholder={'专业'}/>
+                            <Input placeholder={'专业'}
+                                   value={this.state.addModalMajor}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalMajor: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'性别'}>
-                            <Input placeholder={'性别'}/>
+                            <Input placeholder={'性别'}
+                                   value={this.state.addModalSex}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalSex: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'年级'}>
-                            <Input placeholder={'年级'}/>
+                            <Input placeholder={'年级'}
+                                   value={this.state.addModalGrade}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalGrade: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'绩点'}>
-                            <Input placeholder={'绩点'}/>
+                            <Input placeholder={'绩点'}
+                                   value={this.state.addModalGpa}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalGpa: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                         <Form.Item label={'手机'}>
-                            <Input placeholder={'手机'}/>
+                            <Input placeholder={'手机'}
+                                   value={this.state.addModalPhone}
+                                   onChange={(e) => {
+                                       this.setState({
+                                           addModalPhone: e.target.value
+                                       });
+                                   }}/>
                         </Form.Item>
                     </Form>
                 </Modal>
@@ -196,7 +307,11 @@ export class StudentIndexPage extends React.Component {
                            });
                        }} title={'批量修改'}
                        okText={'提交'}
-                       cancelText={'取消'}>
+                       cancelText={'取消'}
+                       confirmLoading={this.state.modifyModalDealing}
+                       onOk={() => {
+                           // TODO
+                       }}>
                     <Form layout={'inline'}>
                         <Form.Item label={'学号'}>
                             <Input placeholder={'学号'}/>

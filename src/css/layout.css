@@ -58,12 +58,27 @@
     margin-top: 10px;
 }
 
+.margin-top-40px {
+    margin-top: 40px;
+}
+
 .margin-left-10px {
     margin-left: 10px;
 }
 
 .padding-10px {
     padding: 10px;
+}
+.padding-left-10px {
+    padding-left: 10px;
+}
+
+.padding-left-40px {
+    padding-left: 40px;
+}
+
+.padding-0-auto {
+    padding: 0 auto;
 }
 
 .float-right {
@@ -72,4 +87,9 @@
 
 .float-left {
     float: left;
+}
+
+.affixBottom {
+    position: fixed;
+    bottom: 20px;
 }

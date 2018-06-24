@@ -14,6 +14,8 @@ let dbConnectionInfo = {
     database: 'student_info_manager',
     connectTimeout: 1000
 };
+// 管理员密码hash
+let adminPasswordHash = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
 
 // 全局异常处理
 process.on('uncaughtException', (err) => {
@@ -30,7 +32,9 @@ server.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Credentials", "true");
-    if (req.method === 'OPTIONS') res.send(200); else next();
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    } else next();
 });
 server.use(cookieParser());
 server.use(session({
@@ -40,6 +44,39 @@ server.use(session({
 }));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
+server.post('/request/user/login', (req, res) => {
+    // 获取参数
+    let args = req.body;
+    // 先看看是不是管理员账户
+    if (args.username === 'admin') {
+        // 验证密码
+        if (args.password === adminPasswordHash) {
+            req.session.login = true;
+            req.session.admin = true;
+            return res.json({
+                success: true
+            });
+        } else {
+            return res.json({
+                success: false
+            });
+        }
+    } else {
+        // 查找学生数据库中是否有匹配的学号，如果有则获取他的信息
+        let connection = mysql.createConnection(dbConnectionInfo);
+        let sql = 'select * from student where number = ? limit 1';
+        connection.query(sql, [args.username], (err, result) => {
+            if (err) {
+                connection.end();
+                return res.json({
+                    success: false
+                });
+            }
+            // TODO
+            console.log(result);
+        });
+    }
+});
 server.post('/request/student/getAll', (req, res) => {
     let connection = mysql.createConnection(dbConnectionInfo);
     connection.query('select * from student', (err, r) => {

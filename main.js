@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const express = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
@@ -23,6 +25,19 @@ let window;
 
 // 本地服务器
 let server = express();
+server.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    if (req.method === 'OPTIONS') res.send(200); else next();
+});
+server.use(cookieParser());
+server.use(session({
+    secret: 'session',
+    resave: true,
+    saveUninitialized: true
+}));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
 server.post('/request/student/getAll', (req, res) => {
@@ -98,7 +113,6 @@ server.post('/request/student/delete', (req, res) => {
     });
     let sql = `delete from student where id in (${idList})`;
     connection.query(sql, (err) => {
-        // 延迟一秒执行，防止老师感觉我的数据库操作太快
         if (err) {
             connection.end();
             return res.json({
@@ -166,8 +180,8 @@ let createWindow = () => {
     });
 
     // 加载应用中的index.html文件
-    // window.loadFile('./build/index.html/');
-    window.loadURL('http://localhost:3000/');
+    // window.loadFile('./build/index.html/login');
+    window.loadURL('http://localhost:3000/login');
 
     // 当window被关闭时，除掉window的引用
     window.on('closed', () => {

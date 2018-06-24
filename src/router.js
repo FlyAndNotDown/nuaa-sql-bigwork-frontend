@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { IndexPage } from "./page";
-import { StudentIndexPage } from "./page/student";
+import { AdminIndexPage } from "./page/admin/index";
+import { AdminStudentPage } from "./page/admin/student";
+import { LoginPage } from "./page/login";
 
 export class MainRouter extends React.Component {
     render() {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path={'/'} component={IndexPage}/>
-                    <Route exact path={'/student'} component={StudentIndexPage}/>
+                    <Route exact path={'/login'} component={LoginPage}/>
+                    <Route exact path={'/admin'} component={AdminIndexPage}/>
+                    <Route exact path={'/admin/student'} component={AdminStudentPage}/>
                 </Switch>
             </BrowserRouter>
         );

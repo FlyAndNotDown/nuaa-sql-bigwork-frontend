@@ -2,9 +2,10 @@ import React from 'react';
 import { Table, Button, Row, Col, Breadcrumb, Modal, message, Form, Input, Popconfirm } from 'antd';
 import { FixedLayout } from "../../component/layout/fixed-layout";
 import { Link } from 'react-router-dom';
+import { serverConfig } from "../../config";
 import axios from 'axios';
 
-export class StudentIndexPage extends React.Component {
+export class AdminStudentPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -93,7 +94,7 @@ export class StudentIndexPage extends React.Component {
         });
 
         axios
-            .post('/request/student/getAll')
+            .post(`${serverConfig.url}/request/student/getAll`)
             .then((res) => {
                 if (res.data.success) {
                     this.setState({
@@ -119,7 +120,7 @@ export class StudentIndexPage extends React.Component {
                 <Row className={'width-100 height-100 margin-60px-auto'}>
                     <Col>
                         <Breadcrumb className={'font-size-20px'}>
-                            <Breadcrumb.Item><Link to={'/'}>首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to={'/admin'}>管理员</Link></Breadcrumb.Item>
                             <Breadcrumb.Item><a>学籍管理</a></Breadcrumb.Item>
                         </Breadcrumb>
                         <h1 className={'font-size-35px'}>学籍详情</h1>
@@ -146,7 +147,7 @@ export class StudentIndexPage extends React.Component {
                                                 cancelText={'点错了'}
                                                 onConfirm={() => {
                                                     axios
-                                                        .post('/request/student/delete', {
+                                                        .post(`${serverConfig.url}/request/student/delete`, {
                                                             ids: this.state.selectedKeys
                                                         })
                                                         .then((res) => {
@@ -200,7 +201,7 @@ export class StudentIndexPage extends React.Component {
                             });
                             // 发送数据到后台
                             axios
-                                .post('request/student/add', {
+                                .post(`${serverConfig.url}/request/student/add`, {
                                     number: this.state.addModalNumber,
                                     name: this.state.addModalName,
                                     college: this.state.addModalCollege,
@@ -322,7 +323,7 @@ export class StudentIndexPage extends React.Component {
                                modifyModalDealing: true
                            });
                            axios
-                               .post('/request/student/modify', {
+                               .post(`${serverConfig.url}/request/student/modify`, {
                                    ids: this.state.selectedKeys,
                                    number: this.state.modifyModalNumber,
                                    name: this.state.modifyModalName,

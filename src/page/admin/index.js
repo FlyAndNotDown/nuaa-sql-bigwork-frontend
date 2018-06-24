@@ -1,10 +1,9 @@
 import React from 'react';
 import { Form, Button, Select, Avatar } from 'antd';
-import { CenterLayout } from "../component/layout/center-layout";
-import request from 'axios';
-import avatarImg from '../img/avatar.jpg';
+import { CenterLayout } from "../../component/layout/center-layout";
+import avatarImg from '../../img/avatar.jpg';
 
-export class IndexPage extends React.Component {
+export class AdminIndexPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -36,7 +35,7 @@ export class IndexPage extends React.Component {
                     </Form.Item>
                     <Form.Item>
                         <Button className={'width-100'} type={'primary'} onClick={() => {
-                            this.props.history.push(`/${this.state.type}`);
+                            this.props.history.push(`/admin/${this.state.type}`);
                         }}>进入系统</Button>
                     </Form.Item>
                 </Form>

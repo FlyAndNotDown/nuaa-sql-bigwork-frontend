@@ -1,11 +1,12 @@
 import React from 'react';
-import { Table, Button, Row, Col, Breadcrumb, Modal, message, Form, Input, Popconfirm } from 'antd';
-import { FixedLayout } from "../../component/layout/fixed-layout";
+import { Table, Button, Col, Breadcrumb, Modal, message, Form, Input, Popconfirm } from 'antd';
+import { FixedLayout } from "../../../component/layout/fixed-layout";
 import { Link } from 'react-router-dom';
-import { serverConfig } from "../../config";
+import { serverConfig } from "../../../config";
 import axios from 'axios';
+import { FixedRow } from "../../../component/layout/fixed-row";
 
-export class AdminStudentPage extends React.Component {
+export class AdminStudentIndexPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -117,9 +118,10 @@ export class AdminStudentPage extends React.Component {
     render() {
         return (
             <FixedLayout>
-                <Row className={'width-100 height-100 margin-60px-auto'}>
+                <FixedRow>
                     <Col>
                         <Breadcrumb className={'font-size-20px'}>
+                            <Breadcrumb.Item><Link to={'/'}>登录</Link></Breadcrumb.Item>
                             <Breadcrumb.Item><Link to={'/admin'}>管理员</Link></Breadcrumb.Item>
                             <Breadcrumb.Item><a>学籍管理</a></Breadcrumb.Item>
                         </Breadcrumb>
@@ -184,7 +186,7 @@ export class AdminStudentPage extends React.Component {
                             </div>) : null
                         }
                     </Col>
-                </Row>
+                </FixedRow>
 
                 <Modal visible={this.state.addModalShow}
                        onCancel={() => {

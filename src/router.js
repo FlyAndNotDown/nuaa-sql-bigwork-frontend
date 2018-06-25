@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AdminIndexPage } from "./page/admin/index";
-import { AdminStudentPage } from "./page/admin/student";
+import { AdminStudentIndexPage } from "./page/admin/student/index";
 import { IndexPage } from "./page/index";
 
 export class MainRouter extends React.Component {
@@ -11,7 +11,7 @@ export class MainRouter extends React.Component {
                 <Switch>
                     <Route exact path={'/'} component={IndexPage}/>
                     <Route exact path={'/admin'} component={AdminIndexPage}/>
-                    <Route exact path={'/admin/student'} component={AdminStudentPage}/>
+                    <Route exact path={'/admin/student/'} component={AdminStudentIndexPage}/>
                 </Switch>
             </BrowserRouter>
         );

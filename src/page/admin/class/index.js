@@ -58,6 +58,15 @@ export class AdminClassIndexPage extends React.Component {
             title: '计划人数',
             dataIndex: 'plan',
             key: 'plan'
+        }, {
+            title: '操作',
+            dataIndex: '',
+            key: '',
+            render: (text, record) => {
+                return (
+                    <Link to={`/admin/class/detail/${record.key}`}>查看已选学生</Link>
+                );
+            }
         }];
     }
 
@@ -205,7 +214,7 @@ export class AdminClassIndexPage extends React.Component {
                                    name: this.state.addModalName,
                                    teacher: this.state.addModalTeacher,
                                    grade: this.state.addModalGrade,
-                                   plan: parseInt(this.state.plan)
+                                   plan: parseInt(this.state.addModalPlan)
                                })
                                .then((res) => {
                                    if (res.data.success) {
@@ -241,7 +250,7 @@ export class AdminClassIndexPage extends React.Component {
                                    value={this.state.addModalTeacher}
                                    onChange={(e) => {
                                        this.setState({
-                                           addModalName: e.target.value
+                                           addModalTeacher: e.target.value
                                        });
                                    }}
                             />
@@ -251,7 +260,7 @@ export class AdminClassIndexPage extends React.Component {
                                    value={this.state.addModalGrade}
                                    onChange={(e) => {
                                        this.setState({
-                                           addModalName: e.target.value
+                                           addModalGrade: e.target.value
                                        });
                                    }}
                             />
@@ -261,7 +270,7 @@ export class AdminClassIndexPage extends React.Component {
                                    value={this.state.addModalPlan}
                                    onChange={(e) => {
                                        this.setState({
-                                           addModalName: e.target.value
+                                           addModalPlan: e.target.value
                                        });
                                    }}
                             />
@@ -317,7 +326,7 @@ export class AdminClassIndexPage extends React.Component {
                                    value={this.state.modifyModalTeacher}
                                    onChange={(e) => {
                                        this.setState({
-                                           modifyModalName: e.target.value
+                                           modifyModalTeacher: e.target.value
                                        });
                                    }}/>
                         </Form.Item>

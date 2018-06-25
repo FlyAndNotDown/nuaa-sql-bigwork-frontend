@@ -89,9 +89,40 @@ export class AdminStudentIndexPage extends React.Component {
 
     refresh() {
         this.setState({
+            // 数据,
             data: [],
+            // 被选中的行
             selectedKeys: [],
-            loadDown: false
+            // 是否加载完毕
+            loadDown: false,
+
+            // Modal显示情况
+            addModalShow: false,
+            modifyModalShow: false,
+
+            // add Modal 中的数据
+            addModalNumber: '',
+            addModalName: '',
+            addModalCollege: '',
+            addModalMajor: '',
+            addModalSex: '',
+            addModalGrade: '',
+            addModalGpa: '',
+            addModalPhone: '',
+
+            // modify Modal中的数据
+            modifyModalNumber: '',
+            modifyModalName: '',
+            modifyModalCollege: '',
+            modifyModalMajor: '',
+            modifyModalSex: '',
+            modifyModalGrade: '',
+            modifyModalGpa: '',
+            modifyModalPhone: '',
+
+            // Modal 处理中
+            addModalDealing: false,
+            modifyModalDealing: false
         });
 
         axios
@@ -243,7 +274,6 @@ export class AdminStudentIndexPage extends React.Component {
                                        this.setState({
                                            addModalNumber: e.target.value
                                        });
-                                       console.log(JSON.stringify(this.state));
                                    }}/>
                         </Form.Item>
                         <Form.Item label={'姓名'}>

@@ -10,8 +10,8 @@ let createWindow = () => {
     });
 
     // 加载应用中的index.html文件
-    // window.loadFile('./build/index.html/login');
-    window.loadURL('http://localhost:3000/login');
+    // window.loadFile('./build/index.html/');
+    window.loadURL('http://localhost:3000/');
 
     // 当window被关闭时，除掉window的引用
     window.on('closed', () => {

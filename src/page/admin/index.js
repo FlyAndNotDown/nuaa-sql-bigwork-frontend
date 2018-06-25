@@ -1,7 +1,8 @@
 import React from 'react';
 import { Form, Button, Select, Avatar } from 'antd';
 import { CenterLayout } from "../../component/layout/center-layout";
-import avatarImg from '../../img/avatar.jpg';
+import axios from 'axios';
+import { serverConfig } from "../../config";
 
 export class AdminIndexPage extends React.Component {
     constructor(props) {
@@ -10,6 +11,10 @@ export class AdminIndexPage extends React.Component {
         this.state = {
             type: 'student'
         };
+    }
+
+    componentDidMount() {
+
     }
 
     render() {
@@ -39,12 +44,6 @@ export class AdminIndexPage extends React.Component {
                         }}>进入系统</Button>
                     </Form.Item>
                 </Form>
-                <div className={'affixBottom padding-left padding-left-40px'}>
-                    <Avatar src={avatarImg}/>
-                    <span className={'color-grey text-size-20px padding-left-10px'}>
-                        Powered By John Kindem
-                    </span>
-                </div>
             </CenterLayout>
         );
     }

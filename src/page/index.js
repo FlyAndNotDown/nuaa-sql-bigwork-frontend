@@ -1,9 +1,10 @@
 import React from 'react';
-import { Form, Input, Avatar, Icon, Button } from 'antd';
+import { Form, Input, Avatar, Icon, Button, message } from 'antd';
 import { CenterLayout } from "../component/layout/center-layout";
 import avatarImg from '../img/avatar.jpg';
 import axios from 'axios';
 import { serverConfig } from "../config";
+import sha256 from 'js-sha256';
 
 export class IndexPage extends React.Component {
     constructor(props) {
@@ -32,7 +33,8 @@ export class IndexPage extends React.Component {
                                onChange={(e) => { this.setState({username: e.target.value}); }}/>
                     </Form.Item>
                     <Form.Item>
-                        <Input placeholder={'密码'} prefix={<Icon type={'key'}/>} value={this.state.password}
+                        <Input placeholder={'密码'} prefix={<Icon type={'key'}/>}
+                               value={this.state.password} type={'password'}
                                onChange={(e) => { this.setState({password: e.target.value}); }}/>
                     </Form.Item>
                     <Form.Item>
@@ -41,10 +43,23 @@ export class IndexPage extends React.Component {
                             axios
                                 .post(`${serverConfig.url}/request/user/login`, {
                                     username: this.state.username,
-                                    password: this.state.password
+                                    password: sha256(this.state.password)
                                 })
                                 .then((res) => {
-
+                                    // 如果登录成功了
+                                    if (res.data.success) {
+                                        message.success('登录成功，即将为您跳转');
+                                        setTimeout(() => {
+                                            // 如果是管理员
+                                            if (res.data.admin) {
+                                                this.props.history.push('/admin');
+                                            } else {
+                                                this.props.history.push('/student');
+                                            }
+                                        }, 1000);
+                                    } else {
+                                        message.error('用户名或密码错误');
+                                    }
                                 });
                         }}>登录</Button>
                     </Form.Item>

@@ -5,7 +5,7 @@ import avatarImg from '../img/avatar.jpg';
 import axios from 'axios';
 import { serverConfig } from "../config";
 
-export class LoginPage extends React.Component {
+export class IndexPage extends React.Component {
     constructor(props) {
         super(props);
 

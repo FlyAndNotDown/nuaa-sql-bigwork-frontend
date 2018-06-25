@@ -22,10 +22,7 @@ export class IndexPage extends React.Component {
                 <Form>
                     <Form.Item>
                         <h1 className={'text-align-center font-size-35px'}>
-                            学生信息管理系统
-                        </h1>
-                        <h1 className={'text-align-center font-size-25px color-grey'}>
-                            输入你账户以开始
+                            欢迎来到教务系统
                         </h1>
                     </Form.Item>
                     <Form.Item>

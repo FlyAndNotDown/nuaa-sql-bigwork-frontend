@@ -7,6 +7,7 @@ import { AdminClassIndexPage } from "./page/admin/class";
 import { StudentIndexPage } from "./page/student";
 import { StudentInfoIndexPage } from "./page/student/info";
 import { StudentSelectIndexPage } from "./page/student/select";
+import {StudentClassIndexPage} from "./page/student/class";
 
 export class MainRouter extends React.Component {
     render() {
@@ -22,6 +23,7 @@ export class MainRouter extends React.Component {
                     <Route exact path={'/student'} component={StudentIndexPage}/>
                     <Route exact path={'/student/info/'} component={StudentInfoIndexPage}/>
                     <Route exact path={'/student/select/'} component={StudentSelectIndexPage}/>
+                    <Route exact path={'/student/class/'} component={StudentClassIndexPage}/>
                 </Switch>
             </BrowserRouter>
         );

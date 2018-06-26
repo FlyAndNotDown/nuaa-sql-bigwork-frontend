@@ -20,7 +20,6 @@ export class StudentInfoIndexPage extends React.Component {
             major: '',
             sex: '',
             grade: '',
-            gpa: '',
             phone: ''
         };
     }
@@ -36,7 +35,6 @@ export class StudentInfoIndexPage extends React.Component {
             major: '',
             sex: '',
             grade: '',
-            gpa: '',
             phone: ''
         });
 
@@ -64,7 +62,6 @@ export class StudentInfoIndexPage extends React.Component {
                                         major: res.data.result.major,
                                         sex: res.data.result.sex,
                                         grade: res.data.result.grade,
-                                        gpa: res.data.result.gpa.toString(),
                                         phone: res.data.result.phone
                                     });
                                 } else {
@@ -122,10 +119,6 @@ export class StudentInfoIndexPage extends React.Component {
                                     <Input className={'width-85'} disabled placeholder={'年级'} value={this.state.grade}/>
                                 </Form.Item>
                                 <Form.Item>
-                                    绩点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <Input className={'width-85'} disabled placeholder={'绩点'} value={this.state.gpa}/>
-                                </Form.Item>
-                                <Form.Item>
                                     电话:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <Input className={'width-85'}placeholder={'电话'} value={this.state.phone}
                                            onChange={(e) => {
@@ -145,7 +138,6 @@ export class StudentInfoIndexPage extends React.Component {
                                                 major: '',
                                                 sex: '',
                                                 grade: '',
-                                                gpa: '-1',
                                                 phone: this.state.phone
                                             })
                                             .then((res) => {

@@ -53,6 +53,7 @@ export class StudentIndexPage extends React.Component {
                             }}>
                                 <Select.Option value={'info'}>个人信息管理</Select.Option>
                                 <Select.Option value={'select'}>选课系统</Select.Option>
+                                <Select.Option value={'class'}>修读课程</Select.Option>
                             </Select>
                         </Form.Item>
                         <Form.Item>

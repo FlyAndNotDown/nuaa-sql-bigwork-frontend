@@ -29,7 +29,6 @@ export class AdminStudentIndexPage extends React.Component {
             addModalMajor: '',
             addModalSex: '',
             addModalGrade: '',
-            addModalGpa: '',
             addModalPhone: '',
 
             // modify Modal中的数据
@@ -39,7 +38,6 @@ export class AdminStudentIndexPage extends React.Component {
             modifyModalMajor: '',
             modifyModalSex: '',
             modifyModalGrade: '',
-            modifyModalGpa: '',
             modifyModalPhone: '',
 
             // Modal 处理中
@@ -77,10 +75,6 @@ export class AdminStudentIndexPage extends React.Component {
             dataIndex: 'grade',
             key: 'grade'
         }, {
-            title: '绩点',
-            dataIndex: 'gpa',
-            key: 'gpa'
-        }, {
             title: '电话',
             dataIndex: 'phone',
             key: 'phone'
@@ -107,7 +101,6 @@ export class AdminStudentIndexPage extends React.Component {
             addModalMajor: '',
             addModalSex: '',
             addModalGrade: '',
-            addModalGpa: '',
             addModalPhone: '',
 
             // modify Modal中的数据
@@ -117,7 +110,6 @@ export class AdminStudentIndexPage extends React.Component {
             modifyModalMajor: '',
             modifyModalSex: '',
             modifyModalGrade: '',
-            modifyModalGpa: '',
             modifyModalPhone: '',
 
             // Modal 处理中
@@ -241,7 +233,6 @@ export class AdminStudentIndexPage extends React.Component {
                                     major: this.state.addModalMajor,
                                     sex: this.state.addModalSex,
                                     grade: this.state.addModalGrade,
-                                    gpa: parseFloat(this.state.addModalGpa),
                                     phone: this.state.addModalPhone
                                 })
                                 .then((res) => {
@@ -260,7 +251,6 @@ export class AdminStudentIndexPage extends React.Component {
                                         addModalMajor: '',
                                         addModalSex: '',
                                         addModalGrade: '',
-                                        addModalGpa: '',
                                         addModalPhone: ''
                                     });
                                 });
@@ -321,15 +311,6 @@ export class AdminStudentIndexPage extends React.Component {
                                        });
                                    }}/>
                         </Form.Item>
-                        <Form.Item label={'绩点'}>
-                            <Input placeholder={'绩点'}
-                                   value={this.state.addModalGpa}
-                                   onChange={(e) => {
-                                       this.setState({
-                                           addModalGpa: e.target.value
-                                       });
-                                   }}/>
-                        </Form.Item>
                         <Form.Item label={'手机'}>
                             <Input placeholder={'手机'}
                                    value={this.state.addModalPhone}
@@ -363,8 +344,6 @@ export class AdminStudentIndexPage extends React.Component {
                                    major: this.state.modifyModalMajor,
                                    sex: this.state.modifyModalSex,
                                    grade: this.state.modifyModalGrade,
-                                   gpa: this.state.modifyModalGpa === '' ?
-                                       '-1' : this.state.modifyModalGpa,
                                    phone: this.state.modifyModalPhone
                                })
                                .then((res) => {
@@ -383,7 +362,6 @@ export class AdminStudentIndexPage extends React.Component {
                                        modifyModalMajor: '',
                                        modifyModalSex: '',
                                        modifyModalGrade: '',
-                                       modifyModalGpa: '',
                                        modifyModalPhone: ''
                                    });
                                });
@@ -440,15 +418,6 @@ export class AdminStudentIndexPage extends React.Component {
                                    onChange={(e) => {
                                        this.setState({
                                            modifyModalGrade: e.target.value
-                                       });
-                                   }}/>
-                        </Form.Item>
-                        <Form.Item label={'绩点'}>
-                            <Input placeholder={'绩点'}
-                                   value={this.state.modifyModalGpa}
-                                   onChange={(e) => {
-                                       this.setState({
-                                           modifyModalGpa: e.target.value
                                        });
                                    }}/>
                         </Form.Item>

@@ -30,6 +30,18 @@
     width: 50%;
 }
 
+.width-80 {
+    width: 80%;
+}
+
+.width-85 {
+    width: 85%;
+}
+
+.width-90 {
+    width: 90%;
+}
+
 .width-95 {
     width: 95%;
 }
@@ -56,6 +68,10 @@
 
 .margin-top-10px {
     margin-top: 10px;
+}
+
+.margin-top-20px {
+    margin-top: 20px;
 }
 
 .margin-top-40px {

@@ -364,7 +364,7 @@ export class AdminStudentIndexPage extends React.Component {
                                    sex: this.state.modifyModalSex,
                                    grade: this.state.modifyModalGrade,
                                    gpa: this.state.modifyModalGpa === '' ?
-                                       -1 : this.state.modifyModalGpa,
+                                       '-1' : this.state.modifyModalGpa,
                                    phone: this.state.modifyModalPhone
                                })
                                .then((res) => {

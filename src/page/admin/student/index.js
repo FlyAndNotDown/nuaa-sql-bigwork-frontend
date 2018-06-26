@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Col, Breadcrumb, Modal, message, Form, Input, Popconfirm } from 'antd';
+import { Table, Button, Col, Breadcrumb, Modal, Spin, message, Form, Input, Popconfirm } from 'antd';
 import { FixedLayout } from "../../../component/layout/fixed-layout";
 import { Link } from 'react-router-dom';
 import { serverConfig } from "../../../config";
@@ -206,7 +206,7 @@ export class AdminStudentIndexPage extends React.Component {
                                            }
                                        }}
                                 />
-                            </div>) : null
+                            </div>) : (<div><Spin/></div>)
                         }
                     </Col>
                 </FixedRow>

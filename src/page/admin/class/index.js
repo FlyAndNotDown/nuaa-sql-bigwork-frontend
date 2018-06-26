@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Breadcrumb, message, Popconfirm, Table, Modal, Form, Input, Button } from 'antd';
+import { Col, Breadcrumb, message, Popconfirm, Table, Spin, Modal, Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { FixedLayout } from "../../../component/layout/fixed-layout";
 import { FixedRow } from "../../../component/layout/fixed-row";
@@ -64,7 +64,7 @@ export class AdminClassIndexPage extends React.Component {
             key: '',
             render: (text, record) => {
                 return (
-                    <Link to={`/admin/class/detail/${record.key}`}>查看已选学生</Link>
+                    <Link to={`/admin/class/detail/${record.key}/${record.name}`}>查看已选学生</Link>
                 );
             }
         }];
@@ -191,7 +191,7 @@ export class AdminClassIndexPage extends React.Component {
                                            }
                                        }}
                                 />
-                            </div>) : null
+                            </div>) : (<div><Spin/></div>)
                         }
                     </Col>
                 </FixedRow>

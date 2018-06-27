@@ -167,6 +167,8 @@ export class AdminClassDetailPage extends React.Component {
                        okText={'提交'} cancelText={'取消'}
                        confirmLoading={this.state.modalDealing}
                        onOk={() => {
+                           if (!/^[0-4].[0-9]$|^5.0$|^[0-5]$/.test(this.state.modalGpa))
+                               return message.error('绩点应该为0-5.0之间的一个一位小数');
                            this.setState({
                                modalDealing: true
                            });
@@ -174,7 +176,7 @@ export class AdminClassDetailPage extends React.Component {
                                .post(`${serverConfig.url}/request/select/setGpa`, {
                                    class: this.props.match.params.class,
                                    students: this.state.selectedKeys,
-                                   gpa: this.state.gpa
+                                   gpa: this.state.modalGpa
                                })
                                .then((res) => {
                                    if (res.data.success) {
@@ -195,10 +197,10 @@ export class AdminClassDetailPage extends React.Component {
                     <Form>
                         <Form.Item label={'绩点'}>
                             <Input placeholder={'绩点'}
-                                   value={this.state.gpa}
+                                   value={this.state.modalGpa}
                                    onChange={(e) => {
                                        this.setState({
-                                           gpa: e.target.value
+                                           modalGpa: e.target.value
                                        });
                                    }}/>
                         </Form.Item>

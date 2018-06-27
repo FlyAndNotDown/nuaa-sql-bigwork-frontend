@@ -206,6 +206,14 @@ export class AdminClassIndexPage extends React.Component {
                        okText={'提交'}
                        cancelText={'取消'}
                        onOk={() => {
+                           if (!/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.addModalName))
+                               return message.error('课程名不符合规范');
+                           if (!/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.addModalTeacher))
+                               return message.error('任课老师名不符合规范');
+                           if (!/^2[0-9]{3}$/.test(this.state.addModalGrade))
+                               return message.error('年级必须为年份');
+                           if (!/^[0-9]{1,4}$/.test(this.state.addModalPlan))
+                               return message.error('输入人数不符合要求');
                            this.setState({
                                addModalDealing: true
                            });
@@ -287,6 +295,12 @@ export class AdminClassIndexPage extends React.Component {
                        cancelText={'取消'}
                        confirmLoading={this.state.modifyModalDealing}
                        onOk={() => {
+                           if (this.state.modifyModalName !== '' &&
+                               !/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.modifyModalName))
+                               return message.error('课程名不符合规范');
+                           if (this.state.modifyModalTeacher !== '' &&
+                               !/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.modifyModalTeacher))
+                               return message.error('任课老师名不符合规范');
                            this.setState({
                                modifyModalDealing: true
                            });

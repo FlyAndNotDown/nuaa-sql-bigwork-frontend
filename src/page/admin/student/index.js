@@ -221,40 +221,54 @@ export class AdminStudentIndexPage extends React.Component {
                        okText={'提交'}
                        cancelText={'取消'}
                        onOk={() => {
-                            this.setState({
-                                addModalDealing: true
-                            });
-                            // 发送数据到后台
-                            axios
-                                .post(`${serverConfig.url}/request/student/add`, {
-                                    number: this.state.addModalNumber,
-                                    name: this.state.addModalName,
-                                    college: this.state.addModalCollege,
-                                    major: this.state.addModalMajor,
-                                    sex: this.state.addModalSex,
-                                    grade: this.state.addModalGrade,
-                                    phone: this.state.addModalPhone
-                                })
-                                .then((res) => {
-                                    if (res.data.success) {
-                                        message.success('添加成功!');
-                                        this.refresh();
-                                    } else {
-                                        message.error('添加失败!');
-                                    }
-                                    this.setState({
-                                        addModalShow: false,
-                                        addModalDealing: false,
-                                        addModalNumber: '',
-                                        addModalName: '',
-                                        addModalCollege: '',
-                                        addModalMajor: '',
-                                        addModalSex: '',
-                                        addModalGrade: '',
-                                        addModalPhone: ''
-                                    });
-                                });
-                        }}
+                           if (!/^[0-9]{9}$/.test(this.state.addModalNumber))
+                               return message.error('学号必须为9为数字');
+                           if (!/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.addModalName))
+                               return message.error('名字不符合规范');
+                           if (!/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.addModalCollege))
+                               return message.error('学院名不符合规范');
+                           if (!/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.addModalMajor))
+                               return message.error('专业名不符合规范');
+                           if (!/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.addModalSex))
+                               return message.error('性别名不符合规范');
+                           if (!/^2[0-9]{3}$/.test(this.state.addModalGrade))
+                               return message.error('年级必须为年份');
+                           if (!/^1[0-9]{10}$/.test(this.state.addModalPhone))
+                               return message.error('手机号不正常');
+                           this.setState({
+                               addModalDealing: true
+                           });
+                           // 发送数据到后台
+                           axios
+                               .post(`${serverConfig.url}/request/student/add`, {
+                                   number: this.state.addModalNumber,
+                                   name: this.state.addModalName,
+                                   college: this.state.addModalCollege,
+                                   major: this.state.addModalMajor,
+                                   sex: this.state.addModalSex,
+                                   grade: this.state.addModalGrade,
+                                   phone: this.state.addModalPhone
+                               })
+                               .then((res) => {
+                                   if (res.data.success) {
+                                       message.success('添加成功!');
+                                       this.refresh();
+                                   } else {
+                                       message.error('添加失败!');
+                                   }
+                                   this.setState({
+                                       addModalShow: false,
+                                       addModalDealing: false,
+                                       addModalNumber: '',
+                                       addModalName: '',
+                                       addModalCollege: '',
+                                       addModalMajor: '',
+                                       addModalSex: '',
+                                       addModalGrade: '',
+                                       addModalPhone: ''
+                                   });
+                               });
+                       }}
                        confirmLoading={this.state.addModalDealing}>
                     <Form layout={'inline'}>
                         <Form.Item label={'学号'}>
@@ -332,6 +346,27 @@ export class AdminStudentIndexPage extends React.Component {
                        cancelText={'取消'}
                        confirmLoading={this.state.modifyModalDealing}
                        onOk={() => {
+                           if (this.state.modifyModalNumber !== '' &&
+                               !/^[0-9]{9}$/.test(this.state.modifyModalNumber))
+                               return message.error('学号必须为9为数字');
+                           if (this.state.modifyModalName !== '' &&
+                               !/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.modifyModalName))
+                               return message.error('名字不符合规范');
+                           if (this.state.modifyModalCollege !== '' &&
+                               !/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.modifyModalCollege))
+                               return message.error('学院名不符合规范');
+                           if (this.state.modifyModalMajor !== '' &&
+                               !/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.modifyModalMajor))
+                               return message.error('专业名不符合规范');
+                           if (this.state.modifyModalSex !== '' &&
+                               !/^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(this.state.modifyModalSex))
+                               return message.error('性别名不符合规范');
+                           if (this.state.modifyModalGrade !== '' &&
+                               !/^2[0-9]{3}$/.test(this.state.modifyModalGrade))
+                               return message.error('年级必须为年份');
+                           if (this.state.modifyModalPhone !== '' &&
+                               !/^1[0-9]{10}$/.test(this.state.modifyModalPhone))
+                               return message.error('手机号不正常');
                            this.setState({
                                modifyModalDealing: true
                            });

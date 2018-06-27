@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Avatar, Icon, Button, message } from 'antd';
 import { CenterLayout } from "../component/layout/center-layout";
-import avatarImg from '../img/avatar.jpg';
+import avatarImg from '../img/avatar.png';
 import axios from 'axios';
 import { serverConfig } from "../config";
 import sha256 from 'js-sha256';
@@ -61,10 +61,11 @@ export class IndexPage extends React.Component {
                         }}>登录</Button>
                     </Form.Item>
                 </Form>
-                <div className={'affixBottom padding-left padding-left-40px'}>
-                    <Avatar src={avatarImg}/>
+                <div className={'affixBottom'}>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Avatar src={avatarImg} size={'large'}/>
                     <span className={'color-grey text-size-20px padding-left-10px'}>
-                        Powered By John Kindem
+                        Powered By NUAA.John Kindem
                     </span>
                 </div>
             </CenterLayout>

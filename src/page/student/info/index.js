@@ -93,7 +93,7 @@ export class StudentInfoIndexPage extends React.Component {
                     </Col>
                     <Row>
                         <Col span={10} offset={7}>
-                            <Form className={'margin-top-40px'}>
+                            <Form className={'margin-top-80px'}>
                                 <Form.Item>
                                     学号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <Input className={'width-85'} disabled placeholder={'学号'} value={this.state.number}/>

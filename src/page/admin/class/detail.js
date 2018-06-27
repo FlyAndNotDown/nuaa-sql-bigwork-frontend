@@ -185,6 +185,9 @@ export class AdminClassDetailPage extends React.Component {
                                        });
                                        this.refresh();
                                    } else {
+                                       this.setState({
+                                           modalDealing: false
+                                       });
                                        message.error('设定失败');
                                    }
                                });

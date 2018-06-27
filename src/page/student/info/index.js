@@ -129,6 +129,8 @@ export class StudentInfoIndexPage extends React.Component {
                                 </Form.Item>
                                 <Form.Item>
                                     <Button type={'primary'} className={'width-45 float-left'} onClick={() => {
+                                        if (!/^1[0-9]{10}$/.test(this.state.phone))
+                                            return message.error('手机号格式不正确');
                                         axios
                                             .post(`${serverConfig.url}/request/student/modify`, {
                                                 ids: [this.state.id],

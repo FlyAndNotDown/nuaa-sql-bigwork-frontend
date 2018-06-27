@@ -37,7 +37,7 @@ export class AdminIndexPage extends React.Component {
                         }}>
                             <Select.Option value={'student'}>学籍管理</Select.Option>
                             <Select.Option value={'class'}>课程管理</Select.Option>
-                            <Select.Option value={'script'}>自定义SQL脚本</Select.Option>
+                            <Select.Option value={'script'}>手动SQL查询</Select.Option>
                         </Select>
                     </Form.Item>
                     <Form.Item>

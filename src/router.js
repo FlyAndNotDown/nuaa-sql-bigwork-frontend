@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import { AdminIndexPage } from "./page/admin/index";
 import { AdminStudentIndexPage } from "./page/admin/student/index";
 import { IndexPage } from "./page/index";
@@ -14,7 +14,7 @@ import {AdminScriptIndexPage} from "./page/admin/script";
 export class MainRouter extends React.Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <Switch>
                     <Route exact path={'/'} component={IndexPage}/>
 
@@ -29,7 +29,7 @@ export class MainRouter extends React.Component {
                     <Route exact path={'/student/select/'} component={StudentSelectIndexPage}/>
                     <Route exact path={'/student/class/'} component={StudentClassIndexPage}/>
                 </Switch>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
